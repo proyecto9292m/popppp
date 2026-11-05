@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto | Vías que Abrazan</title>
+<meta name="description" content="Ponte en contacto con Vías que Abrazan. Guía educativa sobre seguridad vial y movilidad que cuida.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0d4f3c">
+<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root{
+  --jade-900:#0d4f3c; --jade-800:#116b51; --jade-700:#158766;
+  --jade-600:#1aa37a; --jade-500:#20c997; --jade-400:#4ddbb2;
+  --jade-300:#84e8c9; --jade-200:#b8f2de; --jade-100:#dcf9ee;
+  --jade-50:#effcf6; --menta:#e0fbf1; --blanco:#ffffff;
+  --texto:#123029; --texto-suave:#5b7a70; --borde:#c8ecdd;
+  --sombra:0 4px 18px rgba(13,79,60,0.06);
+  --sombra-hover:0 14px 40px rgba(13,79,60,0.14);
+  --radio:14px; --radio-sm:9px; --max:1160px; --trans:0.3s ease;
+  --fuente:'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+body{ font-family:var(--fuente); color:var(--texto); background:var(--blanco);
+  line-height:1.75; font-size:16px; -webkit-font-smoothing:antialiased; }
+.contenedor{ width:100%; max-width:var(--max); margin:0 auto; padding:0 24px; }
+.cabecera{ position:sticky; top:0; background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--borde); z-index:1000; }
+.barra-nav{ display:flex; align-items:center; justify-content:space-between;
+  padding:14px 24px; max-width:var(--max); margin:0 auto; }
+.logo{ display:flex; align-items:center; gap:11px; font-weight:800;
+  font-size:1.18rem; color:var(--jade-900); text-decoration:none; }
+.logo-icono{ width:42px; height:42px;
+  background:linear-gradient(135deg, var(--jade-600), var(--jade-400));
+  color:#fff; border-radius:12px; display:grid; place-items:center; font-size:1.15rem; }
+.menu{ display:flex; gap:2px; list-style:none; align-items:center; }
+.menu a{ color:var(--texto); padding:8px 15px; border-radius:var(--radio-sm);
+  font-size:0.88rem; font-weight:600; transition:all var(--trans); text-decoration:none; }
+.menu a:hover{ background:var(--jade-50); color:var(--jade-700); }
+.menu a.activo{ color:var(--jade-700); }
+.franja-valores{ background:linear-gradient(90deg, var(--jade-800), var(--jade-600));
+  color:#fff; padding:10px 0; text-align:center; font-weight:700; font-size:0.82rem; }
+.seccion{ padding:84px 0; }
+.seccion-encabezado{ max-width:740px; margin-bottom:44px; }
+.etiqueta-seccion{ display:inline-block; background:var(--jade-100); color:var(--jade-800);
+  font-weight:700; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase;
+  padding:6px 16px; border-radius:50px; margin-bottom:16px; border:1px solid var(--jade-200); }
+h1{ font-size:clamp(2rem,5vw,3.4rem); font-weight:800; letter-spacing:-0.02em; color:var(--jade-900); margin-bottom:18px; }
+h2{ font-size:clamp(1.6rem,3vw,2.3rem); font-weight:800; color:var(--jade-900); letter-spacing:-0.01em; }
+h3{ font-size:1.2rem; font-weight:700; color:var(--jade-800); }
+p{ margin:0 0 1rem; color:var(--texto); }
+.tarjeta{ background:var(--blanco); border:1px solid var(--borde); border-radius:var(--radio);
+  padding:30px 26px; box-shadow:var(--sombra); transition:all var(--trans);
+  position:relative; overflow:hidden; }
+.tarjeta::before{ content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background:linear-gradient(90deg, var(--jade-500), var(--jade-400));
+  transform:scaleX(0); transform-origin:left; transition:transform var(--trans); }
+.tarjeta:hover{ transform:translateY(-6px); box-shadow:var(--sombra-hover); border-color:var(--jade-300); }
+.tarjeta:hover::before{ transform:scaleX(1); }
+.tarjeta .icono{ font-size:2.2rem; margin-bottom:14px; display:block; }
+.rejilla{ display:grid; gap:22px; }
+.rejilla-3{ grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); }
+.aviso{ border-radius:var(--radio); padding:22px 28px; border-left:5px solid var(--jade-500);
+  background:var(--jade-50); margin:22px 0; }
+.aviso.info{ border-left-color:var(--jade-700); background:var(--jade-100); }
+.aviso.exito{ border-left-color:var(--jade-800); background:var(--jade-50); }
+.pie{ background:var(--jade-900); color:rgba(255,255,255,0.85); padding:60px 0 28px; }
+.pie a{ color:var(--jade-300); transition:opacity var(--trans); text-decoration:none; }
+.pie a:hover{ color:#fff; }
+.pie-rejilla{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:32px; margin-bottom:32px; }
+.pie h4{ color:#fff; margin-bottom:12px; }
+.pie p{ color:rgba(255,255,255,0.65); }
+.pie ul{ list-style:none; padding:0; }
+.pie ul li{ margin-bottom:6px; }
+.pie-legal{ border-top:1px solid rgba(255,255,255,0.12); padding-top:24px;
+  font-size:0.83rem; text-align:center; color:rgba(255,255,255,0.45); }
+.pie-legal a{ color:rgba(255,255,255,0.7); margin:0 7px; }
+.pie-legal a:hover{ color:#fff; }
+@media (max-width:860px){
+  .menu{ position:absolute; top:70px; left:0; right:0; flex-direction:column;
+    align-items:stretch; background:#fff; border-bottom:1px solid var(--borde);
+    padding:10px 18px; box-shadow:var(--sombra-hover); }
+  .menu a{ padding:11px 14px; }
+  .seccion{ padding:56px 0; }
+}
+@media (max-width:480px){
+  .rejilla-3{ grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+  <header class="cabecera">
+    <nav class="barra-nav" aria-label="Navegación principal">
+      <a href="index.html" class="logo">
+        <span class="logo-icono">🤲</span>
+        <span>Vías que Abrazan</span>
+      </a>
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#seguridad">Seguridad</a></li>
+        <li><a href="index.html#movilidad">Movilidad</a></li>
+        <li><a href="index.html#transporte">Transporte</a></li>
+        <li><a href="index.html#glosario">Glosario</a></li>
+        <li><a href="index.html#faq">Preguntas</a></li>
+        <li><a href="contacto.html" class="activo">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="franja-valores">🤲 Guía educativa gratuita · Movilidad que cuida · Sin pagos · Sin donaciones</div>
+
+  <main>
+    <section class="seccion">
+      <div class="contenedor">
+        <div class="seccion-encabezado">
+          <span class="etiqueta-seccion">Contacto</span>
+          <h1>Escríbenos</h1>
+          <p>¿Tienes preguntas, sugerencias o comentarios sobre la guía? Nos encantaría saber de ti. Este es un proyecto educativo sin fines de lucro.</p>
+        </div>
+
+        <div class="rejilla rejilla-3">
+          <div class="tarjeta">
+            <span class="icono">📧</span>
+            <h3>Correo electrónico</h3>
+            <p>Escríbenos a:</p>
+            <p><a href="mailto:contacto@viasqueabrazan.co" style="color:var(--jade-700); font-weight:600;">contacto@viasqueabrazan.co</a></p>
+          </div>
+          <div class="tarjeta">
+            <span class="icono">📞</span>
+            <h3>Emergencias</h3>
+            <p>En caso de emergencia vial, comunícate con la línea:</p>
+            <p style="font-weight:700; color:var(--jade-800); font-size:1.2rem;">123</p>
+          </div>
+          <div class="tarjeta">
+            <span class="icono">💬</span>
+            <h3>Redes sociales</h3>
+            <p>Próximamente estaremos activos en redes sociales para compartir más contenido educativo.</p>
+          </div>
+        </div>
+
+        <div class="aviso info" style="margin-top:40px;">
+          <h3>📌 Aviso importante</h3>
+          <p>Vías que Abrazan es una guía <strong>100% gratuita</strong>. <strong>No se procesan pagos, no se aceptan donaciones y no se vende ningún producto o servicio.</strong> Todo el contenido es de libre acceso.</p>
+        </div>
+
+        <div class="aviso exito" style="margin-top:20px;">
+          <h3>¿Sobre qué puedes escribirnos?</h3>
+          <ul style="margin:10px 0 0 20px; padding:0;">
+            <li>Sugerencias sobre temas que te gustaría ver en la guía.</li>
+            <li>Correcciones o precisiones sobre el contenido educativo.</li>
+            <li>Preguntas generales sobre movilidad y seguridad vial.</li>
+            <li>Comentarios sobre tu experiencia con el sitio.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <div class="pie-rejilla">
+        <div><h4>🤲 Vías que Abrazan</h4><p>Guía educativa y gratuita sobre seguridad vial y movilidad que cuida en Colombia.</p></div>
+        <div><h4>Temas principales</h4><ul><li><a href="index.html#seguridad">Seguridad vial</a></li><li><a href="index.html#movilidad">Movilidad vial</a></li><li><a href="index.html#transporte">Transporte público</a></li><li><a href="index.html#glosario">Glosario</a></li></ul></div>
+        <div><h4>Información legal</h4><ul><li><a href="privacidad.html">Política de Privacidad</a></li><li><a href="politicas-cookies.html">Política de Cookies</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+        <div><h4>Contacto</h4><ul><li>📧 <a href="mailto:contacto@viasqueabrazan.co">contacto@viasqueabrazan.co</a></li><li>📞 Emergencias: 123</li></ul></div>
+      </div>
+      <div class="pie-legal">
+        <p>© 2026 Vías que Abrazan — Todos los derechos reservados.</p>
+        <p><a href="privacidad.html">Privacidad</a> · <a href="politicas-cookies.html">Cookies</a> · <a href="contacto.html">Contacto</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
