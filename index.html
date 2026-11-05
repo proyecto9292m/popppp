@@ -14,8 +14,8 @@
   --jade-900:#0d4f3c; --jade-800:#116b51; --jade-700:#158766;
   --jade-600:#1aa37a; --jade-500:#20c997; --jade-400:#4ddbb2;
   --jade-300:#84e8c9; --jade-200:#b8f2de; --jade-100:#dcf9ee;
-  --jade-50:#effcf6; --menta:#e0fbf1; --blanco:#ffffff;
-  --texto:#123029; --texto-suave:#5b7a70; --borde:#c8ecdd;
+  --jade-50:#effcf6; --blanco:#ffffff; --texto:#123029;
+  --texto-suave:#5b7a70; --borde:#c8ecdd;
   --sombra:0 4px 18px rgba(13,79,60,0.06);
   --sombra-hover:0 14px 40px rgba(13,79,60,0.14);
   --radio:14px; --radio-sm:9px; --max:1160px; --trans:0.3s ease;
@@ -26,6 +26,7 @@ body{ font-family:var(--fuente); color:var(--texto); background:var(--blanco);
   line-height:1.75; font-size:16px; -webkit-font-smoothing:antialiased; }
 .contenedor{ width:100%; max-width:var(--max); margin:0 auto; padding:0 24px; }
 
+/* ===== COOKIES ===== */
 .cookie-overlay{
   position:fixed; inset:0;
   background:rgba(13,79,60,0.72);
@@ -71,9 +72,11 @@ body{ font-family:var(--fuente); color:var(--texto); background:var(--blanco);
 .cookie-enlaces a{ color:var(--jade-700); font-weight:600; text-decoration:none; }
 .cookie-enlaces a:hover{ text-decoration:underline; }
 
+/* OCULTAR COOKIES CUANDO YA SE ELIGIÓ */
 body.cookies-aceptadas .cookie-overlay,
-body.cookies-aceptadas .cookie-banner{ display:none; }
+body.cookies-aceptadas .cookie-banner{ display:none !important; }
 
+/* ===== CABECERA ===== */
 .cabecera{ position:sticky; top:0; background:rgba(255,255,255,0.97);
   backdrop-filter:blur(12px); border-bottom:1px solid var(--borde); z-index:1000; }
 .barra-nav{ display:flex; align-items:center; justify-content:space-between;
@@ -89,9 +92,11 @@ body.cookies-aceptadas .cookie-banner{ display:none; }
 .menu a:hover{ background:var(--jade-50); color:var(--jade-700); }
 .menu a.activo{ color:var(--jade-700); }
 
+/* ===== FRANJA ===== */
 .franja-valores{ background:linear-gradient(90deg, var(--jade-800), var(--jade-600));
   color:#fff; padding:10px 0; text-align:center; font-weight:700; font-size:0.82rem; }
 
+/* ===== HERO ===== */
 .hero{ background:linear-gradient(135deg, #0d4f3c 0%, #116b51 45%, #1aa37a 100%);
   color:#fff; padding:110px 0 90px; text-align:center; position:relative; overflow:hidden; }
 .hero::before{ content:''; position:absolute; top:-80px; left:-80px;
@@ -121,6 +126,7 @@ body.cookies-aceptadas .cookie-banner{ display:none; }
   padding:8px 20px; border-radius:50px; font-size:0.82rem; font-weight:600;
   color:rgba(255,255,255,0.95); }
 
+/* ===== SECCIONES ===== */
 .seccion{ padding:84px 0; }
 .seccion:nth-child(even){ background:var(--jade-50); }
 .seccion-encabezado{ max-width:740px; margin-bottom:44px; }
@@ -132,6 +138,7 @@ h2{ font-size:clamp(1.6rem,3vw,2.3rem); font-weight:800; color:var(--jade-900); 
 h3{ font-size:1.2rem; font-weight:700; color:var(--jade-800); }
 p{ margin:0 0 1rem; color:var(--texto); }
 
+/* ===== TARJETAS ===== */
 .rejilla{ display:grid; gap:22px; }
 .rejilla-2{ grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); }
 .rejilla-3{ grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); }
@@ -148,12 +155,14 @@ p{ margin:0 0 1rem; color:var(--texto); }
 .tarjeta .icono{ font-size:2.2rem; margin-bottom:14px; display:block; }
 .tarjeta h3{ margin-bottom:6px; }
 
+/* ===== AVISOS ===== */
 .aviso{ border-radius:var(--radio); padding:22px 28px; border-left:5px solid var(--jade-500);
   background:var(--jade-50); margin:22px 0; }
 .aviso.info{ border-left-color:var(--jade-700); background:var(--jade-100); }
 .aviso.exito{ border-left-color:var(--jade-800); background:var(--jade-50); }
 .aviso.peligro{ border-left-color:var(--jade-400); background:var(--jade-100); }
 
+/* ===== PIE ===== */
 .pie{ background:var(--jade-900); color:rgba(255,255,255,0.85); padding:60px 0 28px; }
 .pie a{ color:var(--jade-300); transition:opacity var(--trans); text-decoration:none; }
 .pie a:hover{ color:#fff; }
@@ -167,6 +176,15 @@ p{ margin:0 0 1rem; color:var(--texto); }
   font-size:0.83rem; text-align:center; color:rgba(255,255,255,0.45); }
 .pie-legal a{ color:rgba(255,255,255,0.7); margin:0 7px; }
 .pie-legal a:hover{ color:#fff; }
+
+/* Botón para reabrir el aviso (útil para pruebas) */
+.reabrir-cookies{
+  display:inline-block; margin-top:12px; padding:6px 14px;
+  background:transparent; border:1px solid rgba(255,255,255,0.3);
+  color:rgba(255,255,255,0.7); border-radius:6px;
+  font-size:0.75rem; cursor:pointer; font-family:var(--fuente);
+}
+.reabrir-cookies:hover{ background:rgba(255,255,255,0.1); color:#fff; }
 
 @media (max-width:860px){
   .menu{ position:absolute; top:70px; left:0; right:0; flex-direction:column;
@@ -188,9 +206,10 @@ p{ margin:0 0 1rem; color:var(--texto); }
 </head>
 <body>
 
-<div class="cookie-overlay"></div>
+<!-- ===== COOKIES ===== -->
+<div class="cookie-overlay" id="cookie-overlay"></div>
 
-<div class="cookie-banner" role="dialog" aria-modal="true" aria-labelledby="titulo-cookies">
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-modal="true" aria-labelledby="titulo-cookies">
   <div class="cookie-modal">
     <h2 id="titulo-cookies">Aviso de cookies</h2>
     <p>Usamos cookies para mejorar tu experiencia y analizar el tráfico de forma anónima. Al aceptar, nos permites ofrecerte contenido más relevante. También puedes rechazar las cookies no esenciales.</p>
@@ -205,6 +224,7 @@ p{ margin:0 0 1rem; color:var(--texto); }
   </div>
 </div>
 
+<!-- ===== CONTENIDO PRINCIPAL ===== -->
 <header class="cabecera">
   <nav class="barra-nav" aria-label="Navegación principal">
     <a href="index.html" class="logo">
@@ -341,4 +361,130 @@ p{ margin:0 0 1rem; color:var(--texto); }
     </div>
   </section>
 
-  <section class="seccion" id="glosario
+  <section class="seccion" id="glosario">
+    <div class="contenedor">
+      <div class="seccion-encabezado">
+        <span class="etiqueta-seccion">Sección 6 · Glosario</span>
+        <h2>Glosario de seguridad vial</h2>
+      </div>
+      <div style="display:grid; gap:12px;">
+        <div style="background:#fff; border:1px solid var(--borde); border-left:5px solid var(--jade-500); border-radius:var(--radio-sm); padding:16px 20px;">
+          <dt style="font-weight:800; color:var(--jade-800); font-size:1.05rem;">Actor vial</dt>
+          <dd style="margin:0; color:var(--texto);">Toda persona que interactúa en la vía: peatones, ciclistas, motociclistas, conductores y pasajeros.</dd>
+        </div>
+        <div style="background:#fff; border:1px solid var(--borde); border-left:5px solid var(--jade-500); border-radius:var(--radio-sm); padding:16px 20px;">
+          <dt style="font-weight:800; color:var(--jade-800); font-size:1.05rem;">Siniestro vial</dt>
+          <dd style="margin:0; color:var(--texto);">Suceso en la vía que causa daños, lesiones o muertes. Se prefiere este término a "accidente".</dd>
+        </div>
+        <div style="background:#fff; border:1px solid var(--borde); border-left:5px solid var(--jade-500); border-radius:var(--radio-sm); padding:16px 20px;">
+          <dt style="font-weight:800; color:var(--jade-800); font-size:1.05rem;">Movilidad que cuida</dt>
+          <dd style="margin:0; color:var(--texto);">Desplazarse protegiendo la integridad física y emocional de todas las personas.</dd>
+        </div>
+        <div style="background:#fff; border:1px solid var(--borde); border-left:5px solid var(--jade-500); border-radius:var(--radio-sm); padding:16px 20px;">
+          <dt style="font-weight:800; color:var(--jade-800); font-size:1.05rem;">SOAT</dt>
+          <dd style="margin:0; color:var(--texto);">Seguro Obligatorio de Accidentes de Tránsito, que cubre atención a víctimas.</dd>
+        </div>
+        <div style="background:#fff; border:1px solid var(--borde); border-left:5px solid var(--jade-500); border-radius:var(--radio-sm); padding:16px 20px;">
+          <dt style="font-weight:800; color:var(--jade-800); font-size:1.05rem;">Cultura vial</dt>
+          <dd style="margin:0; color:var(--texto);">Conjunto de hábitos y actitudes de respeto y responsabilidad en la vía.</dd>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion" id="faq">
+    <div class="contenedor">
+      <div class="seccion-encabezado">
+        <span class="etiqueta-seccion">Preguntas frecuentes</span>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+      <div style="display:grid; gap:12px;">
+        <div style="border:1px solid var(--borde); border-radius:var(--radio-sm); background:#fff; padding:20px 24px;">
+          <h3 style="margin-bottom:8px;">¿Esta página cobra por su contenido?</h3>
+          <p style="margin:0;">No. Vías que Abrazan es <strong>100% gratuita</strong>. No se procesan pagos, no se aceptan donaciones y todo el contenido es de libre acceso.</p>
+        </div>
+        <div style="border:1px solid var(--borde); border-radius:var(--radio-sm); background:#fff; padding:20px 24px;">
+          <h3 style="margin-bottom:8px;">¿Quién financia este sitio?</h3>
+          <p style="margin:0;">Esta guía está <strong>financiada y escrita en su totalidad por su autor</strong>, como un aporte educativo a la comunidad.</p>
+        </div>
+        <div style="border:1px solid var(--borde); border-radius:var(--radio-sm); background:#fff; padding:20px 24px;">
+          <h3 style="margin-bottom:8px;">¿La información reemplaza la normativa oficial?</h3>
+          <p style="margin:0;">No. El contenido es educativo y orientativo. La norma oficial en Colombia es el Código Nacional de Tránsito.</p>
+        </div>
+        <div style="border:1px solid var(--borde); border-radius:var(--radio-sm); background:#fff; padding:20px 24px;">
+          <h3 style="margin-bottom:8px;">¿Usan cookies?</h3>
+          <p style="margin:0;">Este sitio solo recuerda tu elección de aceptar o rechazar el aviso. No utilizamos cookies de seguimiento ni analítica.</p>
+        </div>
+      </div>
+      <div class="aviso exito" style="margin-top:34px;">
+        <h3>¿Te resultó útil esta guía?</h3>
+        <p>Compártela con tu familia, tus amigos o tu comunidad. Difundir educación vial también salva vidas.</p>
+        <a href="contacto.html" class="boton primario" style="margin-top:10px; display:inline-block;">Escríbenos tu opinión</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--jade-900); color:var(--jade-100); padding:60px 0; text-align:center;">
+    <div class="contenedor" style="max-width:820px; margin:0 auto;">
+      <h2 style="color:#fff;">Compromiso de transparencia</h2>
+      <p style="font-size:1.1rem; color:rgba(255,255,255,0.85);">
+        <strong>Vías que Abrazan</strong> es una guía educativa <strong>100% financiada y escrita por su autor</strong>. No se aceptan donaciones, no se procesan pagos y no se vende ningún producto o servicio. Todo el contenido es de <strong>libre acceso</strong>.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie-rejilla">
+      <div><h4>🤲 Vías que Abrazan</h4><p>Guía educativa y gratuita sobre seguridad vial y movilidad que cuida en Colombia.</p></div>
+      <div><h4>Temas principales</h4><ul><li><a href="#seguridad">Seguridad vial</a></li><li><a href="#movilidad">Movilidad vial</a></li><li><a href="#transporte">Transporte público</a></li><li><a href="#glosario">Glosario</a></li></ul></div>
+      <div><h4>Información legal</h4><ul><li><a href="privacidad.html">Política de Privacidad</a></li><li><a href="politicas-cookies.html">Política de Cookies</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+      <div><h4>Contacto</h4><ul><li>📧 <a href="mailto:contacto@viasqueabrazan.co">contacto@viasqueabrazan.co</a></li><li>📞 Emergencias: 123</li></ul></div>
+    </div>
+    <div class="pie-legal">
+      <p>© 2026 Vías que Abrazan — Todos los derechos reservados.</p>
+      <p><a href="privacidad.html">Privacidad</a> · <a href="politicas-cookies.html">Cookies</a> · <a href="contacto.html">Contacto</a></p>
+      <button type="button" class="reabrir-cookies" id="btn-reabrir">Volver a mostrar aviso de cookies</button>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+(function(){
+  // Clave nueva para no chocar con pruebas anteriores
+  var CLAVE = 'cookies_viasqueabrazan_v2';
+  var body = document.body;
+
+  // Si ya eligió antes, ocultar el banner de inmediato
+  if (localStorage.getItem(CLAVE)) {
+    body.classList.add('cookies-aceptadas');
+  }
+
+  function cerrar(val){
+    localStorage.setItem(CLAVE, val);
+    body.classList.add('cookies-aceptadas');
+  }
+
+  document.getElementById('btn-aceptar').addEventListener('click', function(){
+    cerrar('aceptadas');
+  });
+  document.getElementById('btn-rechazar').addEventListener('click', function(){
+    cerrar('rechazadas');
+  });
+
+  // Botón opcional para volver a mostrar el aviso (útil para pruebas)
+  var btnReabrir = document.getElementById('btn-reabrir');
+  if (btnReabrir) {
+    btnReabrir.addEventListener('click', function(){
+      localStorage.removeItem(CLAVE);
+      body.classList.remove('cookies-aceptadas');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
